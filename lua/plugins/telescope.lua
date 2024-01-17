@@ -44,7 +44,7 @@ local function config()
 			},
 		},
 	}
-	pcall(telescope.load_extension, "fzf")
+	require("telescope").load_extension("fzf")
 
 	vim.api.nvim_create_user_command("LiveGrepGitRoot", live_grep_git_root, {})
 	vim.api.nvim_create_user_command("LiveGrepOpenFiles", telescope_live_grep_open_files, {})
@@ -57,10 +57,8 @@ return {
 		"nvim-lua/plenary.nvim",
 		{
 			"nvim-telescope/telescope-fzf-native.nvim",
-			build = 'make',
-			cond = function()
-				return vim.fn.executable "make" == 1
-			end,
+			build =
+			'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build'
 		},
 	},
 	config = config,
