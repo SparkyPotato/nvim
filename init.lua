@@ -18,3 +18,5 @@ require("plugins")
 require("options")
 require("mappings").set()
 
+vim.o.guifont = "CaskaydiaCove Nerd Font:h16"
+
