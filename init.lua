@@ -14,8 +14,8 @@ if not vim.loop.fs_stat(lazypath) then
 end
 vim.opt.rtp:prepend(lazypath)
 
-require("plugins")
 require("options")
+require("plugins")
 require("mappings").set()
 
 vim.o.guifont = "CaskaydiaCove Nerd Font:h16"

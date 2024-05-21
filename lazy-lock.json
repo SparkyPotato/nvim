@@ -28,7 +28,7 @@
   "onedark.nvim": { "branch": "master", "commit": "8e4b79b0e6495ddf29552178eceba1e147e6cecf" },
   "plenary.nvim": { "branch": "master", "commit": "a3e3bc82a3f95c5ed0d7201546d5d2c19b20d683" },
   "promise-async": { "branch": "main", "commit": "93540c168c5ed2b030ec3e6c40ab8bbb85e36355" },
-  "rainbow-delimiters.nvim": { "branch": "master", "commit": "80ee86a2a81b5f029d5c8a85930cf549f9842635" },
+  "rainbow-delimiters.nvim": { "branch": "master", "commit": "5d0d30b201566ce1fe31415f41fe2a7bdf56f4a7" },
   "telescope-fzf-native.nvim": { "branch": "main", "commit": "9ef21b2e6bb6ebeaf349a0781745549bbb870d27" },
   "telescope.nvim": { "branch": "0.1.x", "commit": "d829aa64059001ee7b2c8c8aa9c4e6df0b17d893" },
   "undotree": { "branch": "master", "commit": "56c684a805fe948936cda0d1b19505b84ad7e065" },
