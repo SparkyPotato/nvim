@@ -1,5 +1,5 @@
 local function config()
-	require("mason").setup()
+	require("mason").setup({ PATH = "append" })
 	require("mason-lspconfig").setup()
 
 	local servers = {
@@ -49,10 +49,9 @@ return {
 	"neovim/nvim-lspconfig",
 	config = config,
 	dependencies = {
-	  { "williamboman/mason.nvim", config = true },
-	  "williamboman/mason-lspconfig.nvim",
-	  { "j-hui/fidget.nvim", opts = {} },
-	  "folke/neodev.nvim",
+		{ "williamboman/mason.nvim", config = true },
+		"williamboman/mason-lspconfig.nvim",
+		{ "j-hui/fidget.nvim",       opts = {} },
+		"folke/neodev.nvim",
 	}
 }
-
