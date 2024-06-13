@@ -27,6 +27,7 @@ local function config()
 	}
 
 	lspconfig.rust_analyzer.setup {
+		on_attach = require("mappings").lsp,
 		settings = servers["rust_analyzer"]
 	}
 
