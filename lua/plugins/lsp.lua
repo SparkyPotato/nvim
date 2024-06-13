@@ -26,21 +26,19 @@ local function config()
 		lineFoldingOnly = true,
 	}
 
-	lspconfig.rust_analyzer.setup {
-		on_attach = require("mappings").lsp,
-		settings = servers["rust_analyzer"]
-	}
+	local function setup_server(server_name)
+		lspconfig[server_name].setup {
+			capabilities = capabilities,
+			on_attach = require("mappings").lsp,
+			settings = servers[server_name],
+			filetypes = (servers[server_name] or {}).filetypes,
+		}
+	end
 
+	setup_server("rust_analyzer")
 	local mason_lspconfig = require("mason-lspconfig")
 	mason_lspconfig.setup_handlers {
-		function(server_name)
-			lspconfig[server_name].setup {
-				capabilities = capabilities,
-				on_attach = require("mappings").lsp,
-				settings = servers[server_name],
-				filetypes = (servers[server_name] or {}).filetypes,
-			}
-		end,
+		setup_server,
 	}
 end
 
