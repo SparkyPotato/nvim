@@ -15,10 +15,10 @@ local plugins = {
 	require("plugins.indent"),
 	require("plugins.telescope"),
 	require("plugins.treesitter"),
+	require("plugins.treesitter-textobjects"),
 	require("plugins.nvimtree"),
 	require("plugins.ufo"),
 	require("plugins.bufferline"),
 }
 
 require("lazy").setup(plugins, {})
-

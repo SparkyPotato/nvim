@@ -70,6 +70,11 @@ local function set()
 	map("n", "<leader>sd", t.diagnostics, { desc = "[s]earch [d]iagnostics" })
 	map("n", "<leader>sr", t.resume, { desc = "[s]earch [r]esume" })
 
+	-- Treesitter
+	local ts_repeat_move = require "nvim-treesitter.textobjects.repeatable_move"
+	map({ "n", "x", "o" }, ";", ts_repeat_move.repeat_last_move)
+	map({ "n", "x", "o" }, ",", ts_repeat_move.repeat_last_move_opposite)
+
 	vim.api.nvim_create_user_command("Format", function(args)
 		local range = nil
 		if args.count ~= -1 then
@@ -167,23 +172,59 @@ local function lsp_mapping(_, bufnr)
 	nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
 end
 
-local ts_mapping = {
-	go_next_start = {
-		["]m"] = "@function.outer",
-		["]]"] = "@class.outer",
+local ts_mapping = {	
+	goto_next_start = {
+		["]f"] = { query = "@function.outer", desc = "Next function start" },
+		["]c"] = { query = "@class.outer", desc = "Next class start" },
+		["]b"] = { query = "@block.outer", desc = "Next block start" },
+		["]p"] = { query = "@parameter.outer", desc = "Next parameter start" },
+		["]s"] = { query = "@statement.outer", desc = "Next statement start" },
 	},
-	go_next_end = {
-		["]M"] = "@function.outer",
-		["]["] = "@class.outer",
+	goto_next_end = {
+		["]F"] = { query = "@function.outer", desc = "Next function end" },
+		["]C"] = { query = "@class.outer", desc = "Next class end" },
+		["]B"] = { query = "@block.outer", desc = "Next block end" },
+		["]P"] = { query = "@parameter.outer", desc = "Next parameter end" },
+		["]S"] = { query = "@statement.outer", desc = "Next statement end" },
 	},
-	go_previous_start = {
-		["[m"] = "@function.outer",
-		["[["] = "@class.outer",
+	goto_previous_start = {
+		["[f"] = { query = "@function.outer", desc = "Previous function start" },
+		["[c"] = { query = "@class.outer", desc = "Previous class start" },
+		["[b"] = { query = "@block.outer", desc = "Previous block start" },
+		["[p"] = { query = "@parameter.outer", desc = "Previous parameter start" },
+		["[s"] = { query = "@statement.outer", desc = "Previous statement start" },
 	},
-	go_previous_end = {
-		["[M"] = "@function.outer",
-		["[]"] = "@class.outer",
+	goto_previous_end = {
+		["[F"] = { query = "@function.outer", desc = "Previous function end" },
+		["[C"] = { query = "@class.outer", desc = "Previous class end" },
+		["[B"] = { query = "@block.outer", desc = "Previous block end" },
+		["[P"] = { query = "@parameter.outer", desc = "Previous parameter end" },
+		["[S"] = { query = "@statement.outer", desc = "Previous statement end" },
 	},
+	goto_next = {},
+	goto_previous = {},
+	keymaps = {
+		["af"] = { query = "@function.outer", desc = "Select outer function" },
+		["if"] = { query = "@function.inner", desc = "Select inner function" },
+		["ac"] = { query = "@class.outer", desc = "Selct outer class" },
+		["ic"] = { query = "@class.inner", desc = "Select inner class" },
+		["ab"] = { query = "@block.outer", desc = "Select outer block" },
+		["ib"] = { query = "@block.inner", desc = "Select inner block" },
+		["ap"] = { query = "@parameter.outer", desc = "Select outer parameter" },
+		["ip"] = { query = "@parameter.inner", desc = "Select inner parameter" },
+		["s"] = { query = "@statement.outer", desc = "Select statement" },
+	},
+	selection_modes = {
+		["@function.outer"] = "V",
+		["@class.outer"] = "<c-v>",
+		["@block.outer"] = "v",
+		["@parameter.outer"] = "v",
+		["@statement.outer"] = "V",
+	},
+	init_selection = "<C-space>",
+	node_incremental = "<C-space>",
+	scope_incremental = false,
+	node_decremental = "<bs>",
 }
 
 return {
@@ -193,4 +234,3 @@ return {
 	lsp = lsp_mapping,
 	ts = ts_mapping,
 }
-

@@ -7,15 +7,18 @@ local function config()
 		rust_analyzer = {
 			["rust-analyzer"] = {
 				checkOnSave = {
-					command = "check"
-				}
-			}
+					command = "check",
+				},
+				assist = {
+					importPrefix = "by_crate",
+				},
+			},
 		},
 		lua_ls = {
 			Lua = {
 				workspace = { checkThirdParty = false },
 				telemetry = { enable = false },
-			}
+			},
 		},
 	}
 
