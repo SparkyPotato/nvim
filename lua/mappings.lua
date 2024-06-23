@@ -157,6 +157,8 @@ local function lsp_mapping(_, bufnr)
 		vim.keymap.set("n", keys, func, { buffer = bufnr, desc = desc })
 	end
 
+	vim.lsp.inlay_hint.enable(true, { bufnr = bufnr })
+
 	nmap("<leader>ln", vim.lsp.buf.rename, "Re[n]ame")
 	nmap("<leader>la", vim.lsp.buf.code_action, "Code [a]ction")
 	local t = require("telescope.builtin")

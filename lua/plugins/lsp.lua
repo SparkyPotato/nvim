@@ -6,12 +6,33 @@ local function config()
 		clangd = {},
 		rust_analyzer = {
 			["rust-analyzer"] = {
+				assist = {
+					termSearch = {
+						fuel = 1000,
+					},
+				},	
+				cargo = {
+					buildScripts = {
+						enable = true,
+					},
+				},
 				checkOnSave = {
 					command = "check",
 				},
-				assist = {
-					importPrefix = "by_crate",
+				completion = {
+					termSearch = {
+						fuel = 1000,
+					},
 				},
+				imports = {
+					granularity = {
+						group = "crate",
+					},
+					prefix = "crate",
+				},
+				procMacro = {
+					enable = true,
+				}
 			},
 		},
 		lua_ls = {
@@ -39,8 +60,7 @@ local function config()
 	end
 
 	setup_server("rust_analyzer")
-	local mason_lspconfig = require("mason-lspconfig")
-	mason_lspconfig.setup_handlers {
+	require("mason-lspconfig").setup_handlers {
 		setup_server,
 	}
 end
