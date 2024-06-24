@@ -8,7 +8,7 @@ local function config()
 			["rust-analyzer"] = {
 				assist = {
 					termSearch = {
-						fuel = 1000,
+						fuel = 500,
 					},
 				},	
 				cargo = {
@@ -21,7 +21,7 @@ local function config()
 				},
 				completion = {
 					termSearch = {
-						fuel = 1000,
+						fuel = 200,
 					},
 				},
 				imports = {
