@@ -7,6 +7,7 @@ local function config()
 		rust_analyzer = {
 			["rust-analyzer"] = {
 				assist = {
+					importPrefix = "by_crate",
 					termSearch = {
 						fuel = 500,
 					},
