@@ -174,7 +174,7 @@ local function lsp_mapping(_, bufnr)
 	nmap("<C-k>", vim.lsp.buf.signature_help, "Signature Documentation")
 end
 
-local ts_mapping = {	
+local ts_mapping = {
 	goto_next_start = {
 		["]f"] = { query = "@function.outer", desc = "Next function start" },
 		["]c"] = { query = "@class.outer", desc = "Next class start" },

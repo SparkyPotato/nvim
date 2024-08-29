@@ -11,7 +11,7 @@ local function config()
 					termSearch = {
 						fuel = 500,
 					},
-				},	
+				},
 				cargo = {
 					buildScripts = {
 						enable = true,
@@ -42,6 +42,14 @@ local function config()
 				telemetry = { enable = false },
 			},
 		},
+		slangd = {
+			slang = {
+				format = {
+					clangFormatStyle = "{ BasedOnStyle: Google, BreakBeforeBraces: Attach, ColumnLimit: 120, UseTab: Always, IndentWidth: 4, TabWidth: 4, PointerAlignment: Left, AllowAllParametersOfDeclarationOnNextLine: true, BinPackParameters: BinPack }",
+				}
+			},
+			files = { "slang" }
+		},
 	}
 
 	local capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -51,19 +59,26 @@ local function config()
 		lineFoldingOnly = true,
 	}
 
-	local function setup_server(server_name)
-		lspconfig[server_name].setup {
+	local function setup(name)
+		lspconfig[name].setup {
 			capabilities = capabilities,
 			on_attach = require("mappings").lsp,
-			settings = servers[server_name],
-			filetypes = (servers[server_name] or {}).filetypes,
+			settings = servers[name],
+			filetypes = servers[name].files
 		}
 	end
 
-	setup_server("rust_analyzer")
-	require("mason-lspconfig").setup_handlers {
-		setup_server,
-	}
+	vim.filetype.add({
+		extension = {
+			slang = "slang"
+		}
+	})
+
+	setup("rust_analyzer")
+	require("mason-lspconfig").setup()
+	setup("lua_ls")
+	setup("clangd")
+	setup("slangd")
 end
 
 return {
@@ -72,7 +87,7 @@ return {
 	dependencies = {
 		{ "williamboman/mason.nvim", config = true },
 		"williamboman/mason-lspconfig.nvim",
-		{ "j-hui/fidget.nvim",       opts = {} },
+		{ "j-hui/fidget.nvim", opts = {} },
 		"folke/lazydev.nvim",
 	}
 }
