@@ -45,7 +45,7 @@ local function config()
 		slangd = {
 			slang = {
 				format = {
-					clangFormatStyle = "{ BasedOnStyle: Google, BreakBeforeBraces: Attach, ColumnLimit: 120, UseTab: Always, IndentWidth: 4, TabWidth: 4, PointerAlignment: Left, AllowAllParametersOfDeclarationOnNextLine: true, BinPackParameters: BinPack }",
+					clangFormatStyle = "{BasedOnStyle: Google, BreakBeforeBraces: Attach, ColumnLimit: 120, UseTab: Always, IndentWidth: 4, TabWidth: 4, PointerAlignment: Left, AllowAllParametersOfDeclarationOnNextLine: true}",
 				}
 			},
 			files = { "slang" }
