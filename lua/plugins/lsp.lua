@@ -13,6 +13,7 @@ local function config()
 					},
 				},
 				cargo = {
+					allFeatures = true,
 					buildScripts = {
 						enable = true,
 					},
@@ -35,6 +36,9 @@ local function config()
 					enable = true,
 				}
 			},
+			root_dir = function (_)
+				return lspconfig.util.root_pattern("Cargo.toml")(vim.fn.getcwd())
+			end
 		},
 		lua_ls = {
 			Lua = {
@@ -48,7 +52,10 @@ local function config()
 					clangFormatStyle = "{BasedOnStyle: Google, BreakBeforeBraces: Attach, ColumnLimit: 120, UseTab: Always, IndentWidth: 4, TabWidth: 4, PointerAlignment: Left, AllowAllParametersOfDeclarationOnNextLine: true}",
 				}
 			},
-			files = { "slang" }
+			files = { "slang" },
+			root_dir = function (_)
+				return lspconfig.util.root_pattern("Cargo.toml")(vim.fn.getcwd()) .. "/shaders/"
+			end
 		},
 	}
 
@@ -64,7 +71,8 @@ local function config()
 			capabilities = capabilities,
 			on_attach = require("mappings").lsp,
 			settings = servers[name],
-			filetypes = servers[name].files
+			filetypes = servers[name].files,
+			root_dir = servers[name].root_dir
 		}
 	end
 
