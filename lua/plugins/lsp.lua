@@ -36,8 +36,14 @@ local function config()
 					enable = true,
 				}
 			},
-			root_dir = function (_)
-				return lspconfig.util.root_pattern("Cargo.toml")(vim.fn.getcwd())
+			root_dir = function(path)
+				local workspace = lspconfig.util.root_pattern("Cargo.toml")(vim.fn.getcwd())
+
+				if vim.startswith(path, workspace) then
+					return workspace
+				end
+
+				return nil
 			end
 		},
 		lua_ls = {
@@ -49,11 +55,12 @@ local function config()
 		slangd = {
 			slang = {
 				format = {
-					clangFormatStyle = "{BasedOnStyle: Google, BreakBeforeBraces: Attach, ColumnLimit: 120, UseTab: Always, IndentWidth: 4, TabWidth: 4, PointerAlignment: Left, AllowAllParametersOfDeclarationOnNextLine: true}",
+					clangFormatStyle =
+					"{BasedOnStyle: Google, BreakBeforeBraces: Attach, ColumnLimit: 120, UseTab: Always, IndentWidth: 4, TabWidth: 4, PointerAlignment: Left, AllowAllParametersOfDeclarationOnNextLine: true}",
 				}
 			},
 			files = { "slang" },
-			root_dir = function (_)
+			root_dir = function(_)
 				return lspconfig.util.root_pattern("Cargo.toml")(vim.fn.getcwd()) .. "/shaders/"
 			end
 		},
@@ -95,7 +102,7 @@ return {
 	dependencies = {
 		{ "williamboman/mason.nvim", config = true },
 		"williamboman/mason-lspconfig.nvim",
-		{ "j-hui/fidget.nvim", opts = {} },
+		{ "j-hui/fidget.nvim",       opts = {} },
 		"folke/lazydev.nvim",
 	}
 }
