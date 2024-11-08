@@ -35,16 +35,7 @@ local function config()
 				procMacro = {
 					enable = true,
 				}
-			},
-			root_dir = function(path)
-				local workspace = lspconfig.util.root_pattern("Cargo.toml")(vim.fn.getcwd())
-
-				if vim.startswith(path, workspace) then
-					return workspace
-				end
-
-				return nil
-			end
+			}
 		},
 		lua_ls = {
 			Lua = {
@@ -88,6 +79,16 @@ local function config()
 			slang = "slang"
 		}
 	})
+
+	for _, method in ipairs({ 'textDocument/diagnostic', 'workspace/diagnostic' }) do
+		local default_diagnostic_handler = vim.lsp.handlers[method]
+		vim.lsp.handlers[method] = function(err, result, context, config)
+			if err ~= nil and err.code == -32802 then
+				return
+			end
+			return default_diagnostic_handler(err, result, context, config)
+		end
+	end
 
 	setup("rust_analyzer")
 	require("mason-lspconfig").setup()
