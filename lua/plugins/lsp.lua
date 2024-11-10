@@ -44,11 +44,16 @@ local function config()
 			},
 		},
 		slangd = {
+			cmd = { "slangd" },
 			slang = {
 				format = {
 					clangFormatStyle =
 					"{BasedOnStyle: Google, BreakBeforeBraces: Attach, ColumnLimit: 120, UseTab: Always, IndentWidth: 4, TabWidth: 4, PointerAlignment: Left, AllowAllParametersOfDeclarationOnNextLine: true}",
-				}
+				},
+				inlayHints = {
+					deducedTypes = true,
+					parameterNames = true,
+				},
 			},
 			files = { "slang" },
 			root_dir = function(_)
@@ -69,6 +74,7 @@ local function config()
 			capabilities = capabilities,
 			on_attach = require("mappings").lsp,
 			settings = servers[name],
+			cmd = servers[name].cmd,
 			filetypes = servers[name].files,
 			root_dir = servers[name].root_dir
 		}
