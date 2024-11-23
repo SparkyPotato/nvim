@@ -38,15 +38,19 @@ local function set()
 
 	-- Which key
 	local key = require("which-key")
-	key.register({
-		["<leader>g"] = { name = "[g]it", _ = "which_key_ignore" },
-		["<leader>s"] = { name = "[s]earch", _ = "which_key_ignore" },
-		["<leader>t"] = { name = "[t]oggle", _ = "which_key_ignore" },
-		["<leader>l"] = { name = "[L]SP", _ = "which_key_ignore" },
+	key.add({
+		{ "<leader>g",  group = "[g]it" },
+		{ "<leader>g_", hidden = true },
+		{ "<leader>l",  group = "[L]SP" },
+		{ "<leader>l_", hidden = true },
+		{ "<leader>s",  group = "[s]earch" },
+		{ "<leader>s_", hidden = true },
+		{ "<leader>t",  group = "[t]oggle" },
+		{ "<leader>t_", hidden = true },
 	})
-	key.register({
-		["<leader>"] = { name = "VISUAL <leader>" },
-	}, { mode = "v" })
+	key.add({
+		{ "<leader>", group = "VISUAL <leader>", mode = "v" },
+	})
 
 	-- Telescope
 	local t = require("telescope.builtin")
