@@ -57,7 +57,6 @@ local function set()
 	map("n", "<leader>?", t.oldfiles, { desc = "[?] Find recently opened files" })
 	map("n", "<leader><space>", t.buffers, { desc = "[ ] Find existing buffers" })
 	map("n", "<leader>/", function()
-		-- You can pass additional configuration to telescope to change theme, layout, etc.
 		t.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
 			winblend = 10,
 			previewer = false,
