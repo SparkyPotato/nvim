@@ -7,10 +7,6 @@ local function set()
 	-- General
 	map("n", "<C-s>", cmd.w, { desc = "Save" })
 
-	-- Nvimtree
-	map("n", "<leader>tt", cmd.NvimTreeToggle, { desc = "Toggle [t]ree" })
-	map("n", "<leader>h", cmd.NvimTreeFocus, { desc = "[h] Focus Tree" })
-
 	-- Undotree
 	map("n", "<leader>tu", cmd.UndotreeToggle, { desc = "Toggle [u]ndotree" })
 

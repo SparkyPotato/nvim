@@ -16,7 +16,7 @@ local plugins = {
 	require("plugins.telescope"),
 	require("plugins.treesitter"),
 	require("plugins.treesitter-textobjects"),
-	require("plugins.nvimtree"),
+	require("plugins.neotree"),
 	require("plugins.ufo"),
 	require("plugins.bufferline"),
 }
