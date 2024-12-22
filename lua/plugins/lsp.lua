@@ -5,59 +5,65 @@ local function config()
 	local servers = {
 		clangd = {},
 		rust_analyzer = {
-			["rust-analyzer"] = {
-				assist = {
-					importPrefix = "by_crate",
-					termSearch = {
-						fuel = 500,
+			settings = {
+				["rust-analyzer"] = {
+					assist = {
+						importPrefix = "by_crate",
+						termSearch = {
+							fuel = 500,
+						},
 					},
-				},
-				cargo = {
-					allFeatures = true,
-					buildScripts = {
+					cargo = {
+						allFeatures = true,
+						buildScripts = {
+							enable = true,
+						},
+					},
+					checkOnSave = {
+						command = "check",
+					},
+					completion = {
+						termSearch = {
+							fuel = 200,
+						},
+					},
+					imports = {
+						granularity = {
+							group = "crate",
+						},
+						prefix = "crate",
+					},
+					procMacro = {
 						enable = true,
-					},
-				},
-				checkOnSave = {
-					command = "check",
-				},
-				completion = {
-					termSearch = {
-						fuel = 200,
-					},
-				},
-				imports = {
-					granularity = {
-						group = "crate",
-					},
-					prefix = "crate",
-				},
-				procMacro = {
-					enable = true,
+					}
 				}
 			}
 		},
 		lua_ls = {
-			Lua = {
-				workspace = { checkThirdParty = false },
-				telemetry = { enable = false },
+			settings = {
+				Lua = {
+					workspace = { checkThirdParty = false },
+					telemetry = { enable = false },
+				},
 			},
 		},
 		slangd = {
 			cmd = { "slangd" },
-			slang = {
-				format = {
-					clangFormatStyle =
-					"{BasedOnStyle: Google, BreakBeforeBraces: Attach, ColumnLimit: 120, UseTab: Always, IndentWidth: 4, TabWidth: 4, PointerAlignment: Left, AllowAllParametersOfDeclarationOnNextLine: true}",
-				},
-				inlayHints = {
-					deducedTypes = true,
-					parameterNames = true,
+			settings = {
+				slang = {
+					format = {
+						clangFormatStyle =
+						"{BasedOnStyle: Google, BreakBeforeBraces: Attach, ColumnLimit: 120, UseTab: Always, IndentWidth: 4, TabWidth: 4, PointerAlignment: Left, AllowAllParametersOfDeclarationOnNextLine: true}",
+					},
+					inlayHints = {
+						deducedTypes = true,
+						parameterNames = true,
+					},
 				},
 			},
 			files = { "slang" },
-			root_dir = function(_)
-				return lspconfig.util.root_pattern("Cargo.toml")(vim.fn.getcwd()) .. "/shaders/"
+			root_dir = function(f)
+				return lspconfig.util.root_pattern("Cargo.toml")(f) .. "/shaders/"
 			end
 		},
 	}
@@ -73,7 +79,7 @@ local function config()
 		lspconfig[name].setup {
 			capabilities = capabilities,
 			on_attach = require("mappings").lsp,
-			settings = servers[name],
+			settings = servers[name].settings,
 			cmd = servers[name].cmd,
 			filetypes = servers[name].files,
 			root_dir = servers[name].root_dir
