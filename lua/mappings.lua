@@ -166,7 +166,7 @@ local function lsp_mapping(_, bufnr)
 	nmap("<leader>li", t.lsp_implementations, "Goto [i]mplementation")
 	nmap("<leader>lD", t.lsp_type_definitions, "Type [D]efinition")
 	nmap("<leader>ls", t.lsp_document_symbols, "[s]ymbols")
-	nmap("<leader>lw", t.lsp_dynamic_workspace_symbols , "[w]orkspace symbols")
+	nmap("<leader>lw", t.lsp_dynamic_workspace_symbols, "[w]orkspace symbols")
 
 	-- See `:help K` for why this keymap
 	nmap("K", vim.lsp.buf.hover, "Hover Documentation")
