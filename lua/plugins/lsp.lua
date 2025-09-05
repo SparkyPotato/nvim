@@ -3,7 +3,9 @@ local function config()
 	require("mason").setup({ PATH = "append" })
 
 	local servers = {
-		clangd = {},
+		clangd = {
+			cmd = { "verse-clangd" },
+		},
 		rust_analyzer = {
 			settings = {
 				["rust-analyzer"] = {

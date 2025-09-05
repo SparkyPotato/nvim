@@ -52,22 +52,22 @@ local function set()
 	local t = require("telescope.builtin")
 	map("n", "<leader>?", t.oldfiles, { desc = "[?] Find recently opened files" })
 	map("n", "<leader><space>", t.buffers, { desc = "[ ] Find existing buffers" })
-	map("n", "<leader>/", function()
-		t.current_buffer_fuzzy_find(require("telescope.themes").get_dropdown({
-			winblend = 10,
-			previewer = false,
-		}))
-	end, { desc = "[/] Fuzzily search in current buffer" })
+	map("n", "<leader>/", t.current_buffer_fuzzy_find, { desc = "[/] Fuzzily search in current buffer" })
 
 	map("n", "<leader>s/", cmd.LiveGrepOpenFiles, { desc = "[s]earch [/] in Open Files" })
 	map("n", "<leader>ss", t.builtin, { desc = "[s]earch [s]elect Telescope" })
 	map("n", "<leader>gf", t.git_files, { desc = "Search [g]it [f]iles" })
-	map("n", "<leader>sf", t.find_files, { desc = "[s]earch [f]iles" })
+	map("n", "<leader>sF", t.find_files, { desc = "[s]earch [F]iles" })
 	map("n", "<leader>sh", t.help_tags, { desc = "[s]earch [h]elp" })
 	map("n", "<leader>sg", t.live_grep, { desc = "[s]earch by [g]rep" })
 	map("n", "<leader>sG", cmd.LiveGrepGitRoot, { desc = "[s]earch by [G]rep on Git Root" })
 	map("n", "<leader>sd", t.diagnostics, { desc = "[s]earch [d]iagnostics" })
 	map("n", "<leader>sr", t.resume, { desc = "[s]earch [r]esume" })
+	
+	-- P4
+	map("n", "<leader>pa", ":P4Add<CR>", { noremap = true, silent = true, desc = "[p]4 [a]dd" })
+	map("n", "<leader>pc", ":P4Checkout<CR>", { noremap = true, silent = true, desc = "[p]4 [c]heckout" })
+	map("n", "<leader>pt", ":P4CheckedInTelescope<CR>", { noremap = true, silent = true, desc = "[p]4 [t]elescope" })
 
 	-- Treesitter
 	local ts_repeat_move = require "nvim-treesitter.textobjects.repeatable_move"
@@ -166,7 +166,7 @@ local function lsp_mapping(_, bufnr)
 	nmap("<leader>li", t.lsp_implementations, "Goto [i]mplementation")
 	nmap("<leader>lD", t.lsp_type_definitions, "Type [D]efinition")
 	nmap("<leader>ls", t.lsp_document_symbols, "[s]ymbols")
-	nmap("<leader>lw", t.lsp_workspace_symbols, "[w]orkspace symbols")
+	nmap("<leader>lw", t.lsp_dynamic_workspace_symbols , "[w]orkspace symbols")
 
 	-- See `:help K` for why this keymap
 	nmap("K", vim.lsp.buf.hover, "Hover Documentation")
@@ -205,14 +205,14 @@ local ts_mapping = {
 	goto_next = {},
 	goto_previous = {},
 	keymaps = {
-		["af"] = { query = "@function.outer", desc = "Select outer function" },
-		["if"] = { query = "@function.inner", desc = "Select inner function" },
-		["ac"] = { query = "@class.outer", desc = "Selct outer class" },
-		["ic"] = { query = "@class.inner", desc = "Select inner class" },
-		["ab"] = { query = "@block.outer", desc = "Select outer block" },
-		["ib"] = { query = "@block.inner", desc = "Select inner block" },
-		["ap"] = { query = "@parameter.outer", desc = "Select outer parameter" },
-		["ip"] = { query = "@parameter.inner", desc = "Select inner parameter" },
+		["fa"] = { query = "@function.outer", desc = "Select outer function" },
+		["fi"] = { query = "@function.inner", desc = "Select inner function" },
+		["ca"] = { query = "@class.outer", desc = "Selct outer class" },
+		["ci"] = { query = "@class.inner", desc = "Select inner class" },
+		["ba"] = { query = "@block.outer", desc = "Select outer block" },
+		["bi"] = { query = "@block.inner", desc = "Select inner block" },
+		["pa"] = { query = "@parameter.outer", desc = "Select outer parameter" },
+		["pi"] = { query = "@parameter.inner", desc = "Select inner parameter" },
 		["s"] = { query = "@statement.outer", desc = "Select statement" },
 	},
 	selection_modes = {

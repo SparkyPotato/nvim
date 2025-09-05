@@ -6,6 +6,7 @@ local plugins = {
 	"numToStr/Comment.nvim",
 	"mbbill/undotree",
 	"folke/which-key.nvim",
+	"motiongorilla/p4nvim",
 	require("plugins.lsp"),
 	require("plugins.cmp"),
 	require("plugins.conform"),
