@@ -48,26 +48,20 @@ local function set()
 		{ "<leader>", group = "VISUAL <leader>", mode = "v" },
 	})
 
-	-- Telescope
-	local t = require("telescope.builtin")
-	map("n", "<leader>?", t.oldfiles, { desc = "[?] Find recently opened files" })
-	map("n", "<leader><space>", t.buffers, { desc = "[ ] Find existing buffers" })
-	map("n", "<leader>/", t.current_buffer_fuzzy_find, { desc = "[/] Fuzzily search in current buffer" })
+	-- FZF
+	local f = require("fzf-lua")
+	map("n", "<leader>/", f.blines, { desc = "[/] Fuzzily search in current buffer" })
+	map("n", "<leader>?", f.oldfiles, { desc = "[?] Find recently opened files" })
+	map("n", "<leader><space>", f.buffers, { desc = "[ ] Find existing buffers" })
 
-	map("n", "<leader>s/", cmd.LiveGrepOpenFiles, { desc = "[s]earch [/] in Open Files" })
-	map("n", "<leader>ss", t.builtin, { desc = "[s]earch [s]elect Telescope" })
-	map("n", "<leader>gf", t.git_files, { desc = "Search [g]it [f]iles" })
-	map("n", "<leader>sF", t.find_files, { desc = "[s]earch [F]iles" })
-	map("n", "<leader>sh", t.help_tags, { desc = "[s]earch [h]elp" })
-	map("n", "<leader>sg", t.live_grep, { desc = "[s]earch by [g]rep" })
-	map("n", "<leader>sG", cmd.LiveGrepGitRoot, { desc = "[s]earch by [G]rep on Git Root" })
-	map("n", "<leader>sd", t.diagnostics, { desc = "[s]earch [d]iagnostics" })
-	map("n", "<leader>sr", t.resume, { desc = "[s]earch [r]esume" })
+	map("n", "<leader>sf", f.files, { desc = "[s]earch [f]iles" })
+	map("n", "<leader>sg", f.live_grep, { desc = "[s]earch by [g]rep" })
+	map("n", "<leader>sr", f.resume, { desc = "[s]earch [r]esume" })
+	map("n", "<leader>ss", f.lsp_live_workspace_symbols, { desc = "[s]earch workspace [s]ymbols" })
 	
 	-- P4
 	map("n", "<leader>pa", ":P4Add<CR>", { noremap = true, silent = true, desc = "[p]4 [a]dd" })
 	map("n", "<leader>pc", ":P4Checkout<CR>", { noremap = true, silent = true, desc = "[p]4 [c]heckout" })
-	map("n", "<leader>pt", ":P4CheckedInTelescope<CR>", { noremap = true, silent = true, desc = "[p]4 [t]elescope" })
 
 	-- Treesitter
 	local ts_repeat_move = require "nvim-treesitter.textobjects.repeatable_move"
@@ -160,13 +154,14 @@ local function lsp_mapping(_, bufnr)
 
 	nmap("<leader>ln", vim.lsp.buf.rename, "Re[n]ame")
 	nmap("<leader>la", vim.lsp.buf.code_action, "Code [a]ction")
-	local t = require("telescope.builtin")
-	nmap("gd", t.lsp_definitions, "[g]oto [d]efinition")
-	nmap("<leader>lr", t.lsp_references, "Goto [r]eferences")
-	nmap("<leader>li", t.lsp_implementations, "Goto [i]mplementation")
-	nmap("<leader>lD", t.lsp_type_definitions, "Type [D]efinition")
-	nmap("<leader>ls", t.lsp_document_symbols, "[s]ymbols")
-	nmap("<leader>lw", t.lsp_dynamic_workspace_symbols, "[w]orkspace symbols")
+
+	-- FZF
+	local f = require("fzf-lua")
+	nmap("gd", f.lsp_definitions, "[g]oto [d]efinition")
+	nmap("gr", f.lsp_references, "[g]oto [r]eferences")
+	nmap("gi", f.lsp_implementations, "[g]oto [i]mplementation")
+	nmap("gD", f.lsp_typedefs, "[g]oto type [D]efinition")
+	nmap("<leader>sd", f.lsp_document_symbols, "[S]earch [d]ocument symbols")
 
 	-- See `:help K` for why this keymap
 	nmap("K", vim.lsp.buf.hover, "Hover Documentation")
