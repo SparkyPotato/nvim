@@ -14,7 +14,6 @@ local plugins = {
 	require("plugins.onedark"),
 	require("plugins.lualine"),
 	require("plugins.indent"),
-	require("plugins.telescope"),
 	require("plugins.fzf"),
 	require("plugins.treesitter"),
 	require("plugins.treesitter-textobjects"),
