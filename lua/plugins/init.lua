@@ -7,6 +7,7 @@ local plugins = {
 	"mbbill/undotree",
 	"folke/which-key.nvim",
 	"motiongorilla/p4nvim",
+	"nvim-telescope/telescope.nvim",
 	require("plugins.lsp"),
 	require("plugins.cmp"),
 	require("plugins.conform"),
